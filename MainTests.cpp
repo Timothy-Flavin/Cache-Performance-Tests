@@ -7,6 +7,52 @@ int vectorTest(int length);
 int cacheMissAdding(int * valuesToBeAdded, int lengthOfArray);
 int cacheHitAdding(int * valuesToBeAdded, int lengthOfArray);
 
+struct cacheHitterStruct {
+	std::vector<int> v1;
+	std::vector<int> v2;
+	std::vector<int> v3;
+	std::vector<int> v4;
+	std::vector<int> v5;
+	std::vector<int> v6;
+	std::vector<int> v7;
+	std::vector<int> v8;
+	std::vector<int> v9;
+	std::vector<int> v10;
+	std::vector<int> v11;
+	std::vector<int> v12;
+	std::vector<int> v13;
+	std::vector<int> v14;
+	std::vector<int> v15;
+	std::vector<int> v16;
+	void increment() {
+		int j = v1.size();
+		for(int i=0; i < j;i++)
+			v1[i]++;
+	}
+};
+struct cacheMisserStruct {
+	int v1 = 0;
+	int v2 = 0;
+	int v3 = 0;
+	int v4 = 0;
+	int v5 = 0;
+	int v6 = 0;
+	int v7 = 0;
+	int v8 = 0;
+	int v9 = 0;
+	int v10 = 0;
+	int v11 = 0;
+	int v12 = 0;
+	int v13 = 0;
+	int v14 = 0;
+	int v15 = 0;
+	int v16 = 0;
+
+	void increment() {
+		this->v1++;
+	}
+};
+
 class myTimer {
 private:
 	std::chrono::steady_clock::time_point t1, t2;
@@ -68,6 +114,49 @@ int main() {
 
 	}
 
+	len = 1;
+	while (len > 0) {
+		std::cout << "array of structs vs struct of arrays" << std::endl;
+		std::cout << "Enter vector length";
+		std::cin >> len;
+		std::cout << "Allocating struct of vectors" << std::endl;
+
+		t.start();
+		cacheHitterStruct myStruct;
+		myStruct.v1.resize(len);
+		myStruct.v2.resize(len);
+		myStruct.v3.resize(len);
+		myStruct.v4.resize(len);
+		myStruct.v5.resize(len);
+		myStruct.v6.resize(len);
+		myStruct.v7.resize(len);
+		myStruct.v8.resize(len);
+		myStruct.v9.resize(len);
+		myStruct.v10.resize(len);
+		myStruct.v11.resize(len);
+		myStruct.v12.resize(len);
+		myStruct.v13.resize(len);
+		myStruct.v14.resize(len);
+		myStruct.v15.resize(len);
+		myStruct.v16.resize(len);
+		t.end();
+		std::cout << "allocating vector of structs" << std::endl;
+		t.start();
+		std::vector<cacheMisserStruct> myMisserStruct(len);
+		t.end();
+
+
+		std::cout << "incrementing struct of vectors" << std::endl;
+		t.start();
+		myStruct.increment();
+		t.end();
+		std::cout << "incrementing vector of structs" << std::endl;
+		t.start();
+		for(int i = 0; i < len; i++)
+			myMisserStruct[i].increment();
+		t.end();
+	}
+
 	std::cin.get();
 	return EXIT_SUCCESS;
 }
@@ -112,3 +201,4 @@ int cacheHitAdding(int * valuesToBeAdded, int lengthOfArray) {
 	//}
 	return valuesToBeAdded[0];
 }
+
